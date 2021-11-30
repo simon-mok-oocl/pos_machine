@@ -26,7 +26,26 @@ public class PosMachine {
 
     public HashMap<String , Integer> getItemCount(List<String> barcodes)
     {
-        return null;
+        HashMap<String , Integer> result =new HashMap<String , Integer>();
+
+        for(String i : barcodes)
+        {
+
+            if(result.get(i) == null)
+            {
+
+                result.put(i , 1);
+
+
+            }
+            else
+            {
+
+                result.put(i , result.get(i)+1 );
+            }
+        }
+
+        return result;
     }
 
     public HashMap<String , Integer> calSubTotal(HashMap<String , Integer> itemCount)
@@ -48,10 +67,9 @@ public class PosMachine {
     public String printReceipt(List<String> barcodes)
     {
         HashMap<String , ItemInfo> indexDB= getDB();
+        HashMap<String , Integer> itemCount = getItemCount(barcodes);
 
-        for(String k : indexDB.keySet())
-            System.out.println(k + ' ' + indexDB.get(k).getName() + ' ' + indexDB.get(k).getPrice());
-
+        System.out.println(itemCount.toString());
         return null;
     }
 }
