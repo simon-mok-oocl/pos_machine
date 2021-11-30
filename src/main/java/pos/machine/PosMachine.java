@@ -33,14 +33,10 @@ public class PosMachine {
 
             if(result.get(i) == null)
             {
-
                 result.put(i , 1);
-
-
             }
             else
             {
-
                 result.put(i , result.get(i)+1 );
             }
         }
@@ -48,14 +44,29 @@ public class PosMachine {
         return result;
     }
 
-    public HashMap<String , Integer> calSubTotal(HashMap<String , Integer> itemCount)
+    public HashMap<String , Integer> calSubTotal(HashMap<String , Integer> itemCount ,
+                                                 HashMap<String , ItemInfo> indexDB)
     {
-        return null;
+        HashMap<String , Integer> result = new HashMap<String , Integer>();
+
+        for(String i : itemCount.keySet())
+            result.put(i , indexDB.get(i).getPrice() * itemCount.get(i));
+        return result;
     }
 
-    public String printSubTotal(HashMap<String , Integer> subtotal)
+    public String printSubTotal(HashMap<String , Integer> subtotal ,
+                                HashMap<String , ItemInfo> indexDB,
+                                HashMap<String , Integer> itemCount)
     {
-        return null;
+        String result = new String();
+
+        //Name: Coca-Cola, Quantity: 5, Unit price: 3 (yuan), Subtotal: 15 (yuan)
+        for(String k : subtotal.keySet())
+        {
+            result += "Name: " + indexDB.get(k).getName() + ", Quantity: " + itemCount.get(k) + ", Unit price: " + indexDB.get(k).getPrice() + " (yuan), Subtotal: " + subtotal.get(k) + " (yuan)\n";
+
+        }
+        return result;
     }
 
 
@@ -68,8 +79,12 @@ public class PosMachine {
     {
         HashMap<String , ItemInfo> indexDB= getDB();
         HashMap<String , Integer> itemCount = getItemCount(barcodes);
+        HashMap<String , Integer> subTotal = calSubTotal(itemCount , indexDB);
+        String subTotalStr = printSubTotal(subTotal , indexDB , itemCount);
+        String result = new String();
 
-        System.out.println(itemCount.toString());
-        return null;
+        result += "***<store earning no money>Receipt***\n";
+        result += subTotalStr;
+        return result;
     }
 }
