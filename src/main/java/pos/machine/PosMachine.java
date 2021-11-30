@@ -89,7 +89,9 @@ public class PosMachine {
 
         result += "***<store earning no money>Receipt***\n";
         result += subTotalStr;
-
+        result += "----------------------\n";
+        result += "Total: " + total + " (yuan)\n";
+        result += "**********************";
 
         return result;
     }
