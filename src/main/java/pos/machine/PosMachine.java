@@ -72,7 +72,10 @@ public class PosMachine {
 
     public int getTotalPrice(HashMap<String , Integer> subtotal)
     {
-        return 0;
+        int result =0;
+        for(String i : subtotal.keySet())
+            result += subtotal.get(i);
+        return result;
     }
 
     public String printReceipt(List<String> barcodes)
@@ -81,10 +84,13 @@ public class PosMachine {
         HashMap<String , Integer> itemCount = getItemCount(barcodes);
         HashMap<String , Integer> subTotal = calSubTotal(itemCount , indexDB);
         String subTotalStr = printSubTotal(subTotal , indexDB , itemCount);
+        int total = getTotalPrice(subTotal);
         String result = new String();
 
         result += "***<store earning no money>Receipt***\n";
         result += subTotalStr;
+
+
         return result;
     }
 }
